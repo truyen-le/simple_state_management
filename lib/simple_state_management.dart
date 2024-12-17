@@ -1,7 +1,5 @@
 library simple_state_management;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/simple_state_builder.dart';
+export 'src/simple_state_notifier.dart';
+export 'src/simple_state_provider.dart';
