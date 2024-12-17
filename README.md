@@ -11,29 +11,66 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A simple state management package.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Notifier
+- Provider
+- Builder
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### Installation
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+
+  simple_state_management:
+    git:
+      url: https://github.com/truyen-le/simple_state_management.git
+      ref: master
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Please refer to `/example` folder for usage.
 
+### Notifier
 ```dart
-const like = 'sample';
+class CounterNotifier extends SimpleStateNotifier<CounterState> {
+  CounterNotifier() : super(const CounterState(count: 0));
+
+  void increaseCount() {
+    final updateCount = state.count + 1;
+    update(state.copyWith(count: updateCount));
+  }
+}
 ```
 
-## Additional information
+### Provider
+```dart
+@override
+Widget build(BuildContext context) {
+  return SimpleStateProvider<CounterNotifier, CounterState>(
+    create: (context) => CounterNotifier(),
+    child: Container(),
+  );
+}
+```
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Builder
+```dart
+@override
+Widget build(BuildContext context) {
+  return SimpleStateBuilder<CounterNotifier, CounterState>(
+    builder: (context, state) => Text('${state.count}'),
+  );
+}
+```
+
+## Calling function from context
+```dart
+context.of<CounterNotifier, CounterState>().increaseCount();
+```
